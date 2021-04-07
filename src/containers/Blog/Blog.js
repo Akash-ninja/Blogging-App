@@ -61,3 +61,5 @@ export default Blog;
 
 // Absolute path - Whatever route comes after domain is absolute path like example.com/posts
 // Relative path - Whatever route comes after some defined path like 'example.com/posts/' + postid
+
+// Redirect - Replaces the page with a new one - Alternative to it - this.props.history.replace('your_route')
