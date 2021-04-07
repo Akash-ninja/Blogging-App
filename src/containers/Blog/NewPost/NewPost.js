@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { Component } from "react";
-
 import "./NewPost.css";
 
 class NewPost extends Component {
@@ -8,6 +7,7 @@ class NewPost extends Component {
     title: "",
     content: "",
     author: "Max",
+    submitted: false,
   };
 
   postDataHandler = () => {
@@ -18,9 +18,10 @@ class NewPost extends Component {
     };
     axios.post("/posts", data).then((response) => {
       console.log(response);
+      this.props.history.replace('/posts')
     });
   };
-  
+
   componentDidMount() {
     console.log(this.props);
   }
