@@ -47,7 +47,8 @@ class Blog extends Component {
             <Route path="/new-post" component={NewPost} />
           ) : null}
           <Route path="/posts" component={Posts} />
-          <Redirect from="/" to="/posts" />
+          <Route render={() => <h1>Not Found</h1>}/>
+          {/* <Redirect from="/" to="/posts" /> */}
         </Switch>
       </div>
     );
@@ -71,3 +72,5 @@ export default Blog;
 // Relative path - Whatever route comes after some defined path like 'example.com/posts/' + postid
 
 // Redirect - Replaces the page with a new one - Alternative to it - this.props.history.replace('your_route')
+// ** Redirect and Route render() here will not work together as Redirect from='/' catches all the routes so it won't 
+// -- execute route render()
