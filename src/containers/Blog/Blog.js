@@ -2,11 +2,17 @@ import React, { Component } from "react";
 import { Route, /*Link, */ NavLink, Redirect, Switch } from "react-router-dom";
 import "./Blog.css";
 import Posts from "./Posts/Posts";
-import NewPost from "./NewPost/NewPost";
+// import NewPost from "./NewPost/NewPost";
+
+import asyncComponent from "../../hoc/asyncComponent";
+
+const AsyncNewPost = asyncComponent(() => {
+  return import("./NewPost/NewPost");
+});
 
 class Blog extends Component {
   state = {
-    auth: false,
+    auth: true,
   };
 
   render() {
@@ -44,10 +50,10 @@ class Blog extends Component {
         </header>
         <Switch>
           {this.state.auth ? (
-            <Route path="/new-post" component={NewPost} />
+            <Route path="/new-post" component={AsyncNewPost} />
           ) : null}
           <Route path="/posts" component={Posts} />
-          <Route render={() => <h1>Not Found</h1>}/>
+          <Route render={() => <h1>Not Found</h1>} />
           {/* <Redirect from="/" to="/posts" /> */}
         </Switch>
       </div>
@@ -72,5 +78,15 @@ export default Blog;
 // Relative path - Whatever route comes after some defined path like 'example.com/posts/' + postid
 
 // Redirect - Replaces the page with a new one - Alternative to it - this.props.history.replace('your_route')
-// ** Redirect and Route render() here will not work together as Redirect from='/' catches all the routes so it won't 
+// ** Redirect and Route render() here will not work together as Redirect from='/' catches all the routes so it won't
 // -- execute route render()
+
+// Bundle.js file - A file which bundles all the project files and that is created at the time of building any React project 
+
+/* Suppose we want to execute NewPost dynamically i.e., the bundle.js loads the code of NewPost component and its child
+ only when the user goes to /new-post route so for doing that we have to use a process called Code-splitting or Lazy-Loading.
+
+ So what lazy-loading eventually does is it only bundles the code in bundle.js file which is required and for the 
+ dynamically loaded components it creates a file chunk.js which will only be executed when user lands on that particular 
+ route (in our case it is '/new-post').
+ */
